@@ -9,7 +9,7 @@ export const fetchbestseller = createAsyncThunk(
       //   "http://localhost:5050/api/products/filter?seller=bestseller"
       // );
       const res = await axios.get(
-        "https://server-two-swart.vercel.app/api/products/filter?seller=bestseller"
+        "https://server-eta-topaz-30.vercel.app/api/products/filter?seller=bestseller"
       );
 
       return res.data;
@@ -30,3 +30,4 @@ export const bestsellerSlice = createSlice({
     });
   },
 });
+
