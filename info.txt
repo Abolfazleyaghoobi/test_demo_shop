@@ -1,0 +1,214 @@
+color code dark mode= #ededed
+
+
+=========================================
+import logo from "../../../assets/logo/logo2.svg"; // Fixed typo
+
+function Login() {
+  return (
+    <div className="w-full h-screen flex justify-center items-center bg-[#858585] overflow-hidden">
+      {/* container */}
+      <div
+        className="md:grid md:grid-cols-2 md:w-[56.25rem] 
+        shadow-[2px_13px_18px_9px_rgba(41,41,41,0.2)] rounded-[9px] overflow-hidden mx-3"
+      >
+        {/* Logo/Image Section */}
+        <div className="flex justify-center items-center bg-white md:bg-transparent py-6 md:py-0">
+          <img src={logo} alt="mobile" className="w-32 md:hidden" />
+          <img
+            src="https://uploadkon.ir/uploads/f0f207_25Rectangle-3463273.png"
+            alt="desktop"
+            className="w-full md:block hidden"
+          />
+        </div>
+
+        {/* Form Section */}
+        <div className="flex flex-col justify-center p-8 bg-white"> {/* Fixed: removed md: prefix from flex */}
+          {/* welcome */}
+          <div className="mb-6">
+            <h1 className="font-bold text-2xl">Welcome🤚</h1>
+            <p className="text-[#dadada]">Please login here</p>
+          </div>
+
+          {/* form log in */}
+          <form onSubmit={(e) => e.preventDefault()} autoComplete="off">
+            {/* email Address */}
+            <div className="flex flex-col">
+              <label htmlFor="email" className="mb-1">Email Address</label>
+              <input
+                className="border outline-0 p-2 text-[20px] rounded-[9px] focus:border-blue-500 transition-colors"
+                type="email"
+                name="email"
+                id="email"
+                required
+              />
+            </div>
+
+            {/* password input */}
+            <div className="flex flex-col mt-5">
+              <label htmlFor="password" className="mb-1">Password</label>
+              <input
+                className="border outline-0 p-2 text-[20px] rounded-[9px] focus:border-blue-500 transition-colors"
+                type="password"
+                name="password"
+                id="password"
+                required
+              />
+            </div>
+
+            {/* remember & forget password */}
+            <div className="flex justify-between items-center mt-5">
+              <span className="flex items-center">
+                <input
+                  className="h-4 w-4 border-black border rounded-[3px]"
+                  type="checkbox"
+                  name="remember"
+                  id="remember"
+                />
+                <label className="ml-2 text-sm md:text-base" htmlFor="remember">
+                  Remember me
+                </label>
+              </span>
+              <a href="#" className="text-sm hover:text-blue-500 transition-colors">
+                Forget Password?
+              </a>
+            </div>
+
+            {/* button */}
+            <button
+              type="submit"
+              className="bg-black text-white p-2 mt-5 rounded-[9px] w-full hover:bg-gray-900 transition-colors"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login;
+
+_____________________________________
+import { useDispatch, useSelector } from "react-redux";
+import CartBestseller from "./CartBestseller";
+import { dataestsellerProduct } from "./dataBestsellerProduct";
+import { useEffect } from "react";
+import { fetchbestseller } from "../../redux/slices/bestseller";
+function ContainerBestseller() {
+
+  
+  const dispatch= useDispatch()
+ const bestsellerProducts=useSelector(store=>store.bestseller.bestseller)
+//  console.log('bestsellerProducts: ', bestsellerProducts);
+  useEffect(()=>{
+    dispatch(fetchbestseller())
+  },[])
+  return (
+    <div className="max-w-[1200px] m-auto ">
+      <h1 className="text-center dark:text-white font-bold text-[2rem]">
+        Our Bestseller
+      </h1>
+      <div className="flex flex-wrap justify-center gap-4">
+        {
+          bestsellerProducts.map((item)=>(
+            <CartBestseller key={item._id} {...item} />
+          ))
+        }
+       
+      </div>
+    </div>
+  );
+}
+
+export default ContainerBestseller;
+
+این قسمت کد های کانتینر کارت هاست 
+____________________________________________
+
+import { GrFavorite } from "react-icons/gr";
+import { MdOutlineFavorite } from "react-icons/md";
+import { CgDollar } from "react-icons/cg";
+import { FaRegEye } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+// import { addToFavorite } from "../../redux/slices/featchProduct";
+// <MdOutlineFavorite />
+function CartBestseller(data) {
+  const imageFailed =
+    "https://uploadkon.ir/uploads/221d26_25file-000000002a5071f4b76361d85fc3ebb3-1-.png";
+  let { id, img, price, discount, isFavorite } = data;
+
+
+  // const  dispatch=useDispatch();
+  const sentToFavorite = () => {
+    // console.log(isFavorite);
+    isFavorite = true;
+    // dispatch(addToFavorite(data))
+    // console.log(isFavorite);
+  };
+  return (
+    <>
+      {/* conainer */}
+      <div className="lg:w-[18%] sm:w-[30%] w-[47%] dark:shadow-[0px_3px_8px_rgba(0,0,0,0.50)] shadow-[0px_3px_8px_rgba(0,0,0,0.20)]  my-3 rounded-[9px] lg:h-[41vh] overflow-hidden group">
+        {/* image */}
+        <div className="relative">
+          <img
+            className="bg-[#e7e7e7cd] dark:bg-[#3f3f3f]"
+            src={img}
+            onError={(e) => {
+          
+              if (e.currentTarget.src !== imageFailed) {
+                e.currentTarget.src = imageFailed;
+              }
+            }}
+          
+            alt=""
+          />
+          <div className="absolute top-0 bg-[#f5303000]  w-full h-full flex flex-col justify-between gap-2 invisible group-hover:visible">
+            <div className="flex  p-1 pt-5  flex-col items-end gap-7">
+              <span>
+                <GrFavorite
+                  className="text-gray-800 dark:text-gray-300 cursor-pointer dark:hover:text-red-500"
+                  size={23}
+                />
+              </span>
+              <span>
+                <FaRegEye
+                  className="text-gray-800 dark:text-gray-300 cursor-pointer dark:hover:text-white"
+                  size={23}
+                />
+              </span>
+            </div>
+            <button className="p-2 xl:mt-15 bg-white dark:bg-gray-300 dark:hover:bg-gray-400 dark:hover:text-white w-[80%] m-auto rounded-[9px]">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+        {/* mini info product */}
+        <div className="p-1.5">
+          {/* marke model product */}
+          <h2 className="dark:text-[#ededed] font-bold">Adidas</h2>
+          <p className="text-[14px] dark:text-[#ededed]">
+            Men adi-dash Running shoes
+          </p>
+          <div className="flex mt-3">
+            <p className="flex dark:text-[#ededed]">
+              <CgDollar size={20} />{" "}
+              <span className="text-black text-[14px] dark:text-[#ededed] ">
+                {discount.price}.00
+              </span>{" "}
+            </p>
+            <p className="flex ml-2 items-center text-[#919191]  line-through">
+              <CgDollar /> <span className="text-[13px]">{price}.00</span>{" "}
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default CartBestseller;
+و این کد  های کارت هاست که داخل لب تابم اینا میاد بالا 
+ولی تو گوشیم نه نمیاد بالا 
