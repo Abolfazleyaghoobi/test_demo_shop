@@ -1,4 +1,4 @@
-import ContainerBestseller from "../../components/cartBestseller/containerBestseller";
+import ContainerBestseller from "../../components/cartBestseller/ContainerBestseller";
 import ContainerCC from "../../components/categoriCart/ContainerCC";
 import Deals from "../../components/deal/Deals";
 import FeaturesBar from "../../components/FeaturesBar/FeaturesBar";
@@ -40,3 +40,4 @@ export default Home;
 // }
 
 // export default Home;
+
